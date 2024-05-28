@@ -3,17 +3,16 @@ import { useState, useEffect } from "react";
 export default function Paggination({
   usersPerPage,
   totalUsers,
-  paginate,
   sendData,
+  page
 }) {
-  const [selectedPage, setSelectedPage] = useState(1);
+  const [selectedPage, setSelectedPage] = useState(page);
   const pageNumber = [];
   for (let i = 1; i <= Math.ceil(totalUsers / usersPerPage); i++) {
     pageNumber.push(i);
   }
   const handleClick = (number) => {
     setSelectedPage(number);
-    paginate(number);
     sendData(number, usersPerPage);
   };
 

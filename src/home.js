@@ -27,6 +27,7 @@ export default function Home() {
   }, [pageParam, resultsParam]);
   const receiveDataFromChild = (page, userPerPage) => {
     setSearchParams({ page: page, results: userPerPage });
+    setCurrentPage(page)
   };
 
   const dispatch = useDispatch();
@@ -41,11 +42,9 @@ export default function Home() {
   const indexOfLastUser = currentPage * usersPerPage;
   const indexOfFirsUser = indexOfLastUser - usersPerPage;
 
-  const currentUsers = users
-    ? users.slice(indexOfFirsUser, indexOfLastUser)
-    : [];
+  
 
-  const paginate = (pageNumber) => setCurrentPage(pageNumber);
+  
 
   const handleSelectChange = (event) => {
     const newResults = parseInt(event.target.value, 10);
@@ -74,12 +73,12 @@ export default function Home() {
           </div>
           <div className="flex justify-center w-full">
             <div className="w-9/12">
-              <UserTable users={currentUsers} />
+            <UserTable users={users} indexOfLastUser={indexOfLastUser} indexOfFirsUser={indexOfFirsUser} />
               <Paggination
                 usersPerPage={usersPerPage}
                 totalUsers={users.length}
-                paginate={paginate}
                 sendData={receiveDataFromChild}
+                page={page}
               />
             </div>
           </div>

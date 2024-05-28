@@ -1,7 +1,7 @@
 import React from "react";
 import { useState} from "react";
 
-export default function UserTable({ users }) {
+export default function UserTable({ users, indexOfLastUser, indexOfFirsUser }) {
   const [sortBy, setSortBy] = useState("name");
   const [sortOrder, setSortOrder] = useState("asc");
 
@@ -21,6 +21,10 @@ export default function UserTable({ users }) {
     }
     return 0;
   });
+
+  const currentUsers = sortedUsers
+    ? sortedUsers.slice(indexOfFirsUser, indexOfLastUser)
+    : [];
 
   const handleSortChange = (newSortBy) => {
     const newSortOrder =
@@ -55,7 +59,7 @@ export default function UserTable({ users }) {
           </tr>
         </thead>
         <tbody>
-          {sortedUsers.map((item, index) => (
+          {currentUsers.map((item, index) => (
             <tr
               key={index}
               className="bg-white border-b dark:bg-gray-800 dark:border-gray-700"
